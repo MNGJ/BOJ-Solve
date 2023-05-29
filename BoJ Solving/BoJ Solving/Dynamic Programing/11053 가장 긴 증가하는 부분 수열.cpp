@@ -1,10 +1,9 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 using namespace std;
 
-int N, answer = 0, dp_max, temp;
-vector<int> v;
+int N, answer = 1;
+int arr[1001];
 int DP[1001];
 
 int main()
@@ -14,20 +13,20 @@ int main()
 
     cin >> N;
 
-    DP[0] = 1;
 
-    for (int i = 0; i < N; i++)
+    for (int i = 1; i <= N; i++)
     {
-        cin >> temp;
-        v.push_back(temp); 
-        dp_max = 0;
-        for (int j = 0; j < v.size(); j++) // DP[i] 보다 낮은 값들 루프
+        cin >> arr[i];
+        DP[i] = 1;
+    }
+
+    for (int i = 1; i <= N; i++)
+    {
+        for (int j = 1; j < i; j++)
         {
-            if (v[i] > v[j]) // 0부터 i-1까지 i와 비교하며 작을경우 검사
-                if (dp_max < DP[j]) // 비교한게 작은 것들 중에서 DP값이 가장 큰 것 저장
-                    dp_max = DP[j];
+            if(arr[i] > arr[j])
+                DP[i] = max(DP[i], DP[j] + 1);
         }
-        DP[i] = dp_max + 1;
         answer = max(answer, DP[i]);
     }
 
